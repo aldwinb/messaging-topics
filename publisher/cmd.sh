@@ -13,4 +13,4 @@ while ! nc -z rabbitmq.local.io 5672; do
 done
 
 # start app
-python3 publisher/app.py
+python3 -u publisher/app.py
