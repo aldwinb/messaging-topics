@@ -18,12 +18,18 @@ exit_code=1
 if docker-compose -f $curr_dir/docker-compose.yml up -d; then
 
   # if start was successful, run apps
+  docker-compose -f $curr_dir/subscriber/docker-compose.yml up -d
+
+  sleep 5
+
+  docker-compose -f $curr_dir/subscriber/docker-compose.yml down -v
 
   # whatever happens, destroy external components
   docker-compose -f $curr_dir/docker-compose.yml down -v
   if [ "$exit_code" -eq "0" ]; then
     exit_code=$?
   fi
+
 fi
 
 exit $exit_code
