@@ -5,4 +5,4 @@ app:
   external_links:
     - "rabbitmq-1:rabbitmq.local.io"
   working_dir: /app
-  command: sh cmd.sh
+  command: sh cmd.sh ${NUM_OF_MESSAGES}
