@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-from subscriber import msgbus
+import msgbus
 import configparser
 import datetime as dt
 import inspect
@@ -18,11 +18,11 @@ def main():
     config = configparser.ConfigParser()
     config.read(os.path.join(pre_path, 'app.ini'))
 
-    #client = msgbus.RabbitMqClient(config['rabbitmq']['host'])
-    opts = msgbus.RabbitMqChannelOptions(config['rabbitmq']['host'],
-                                         config['rabbitmq']['exchange'],
-                                         config['rabbitmq']['topics'],
-                                         config['rabbitmq']['queue'])
+    exchange = msgbus.RabbitMqExchange(name=config['rabbitmq']['exchange'], type='topic')
+    opts = msgbus.RabbitMqChannelOptions(host=config['rabbitmq']['host'],
+                                         exchange=exchange,
+                                         topics=config['rabbitmq']['topics'],
+                                         queue=config['rabbitmq']['queue'])
 
     channel =  msgbus.RabbitMqClient.create_channel(opts)
     channel.basic_consume(on_message, opts.queue)
