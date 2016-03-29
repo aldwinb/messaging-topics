@@ -1,11 +1,16 @@
 #!/usr/bin/env sh
 
-# Do tasks here that are required for your Docker development environment to
-# run (e.g. install requirements)
-# 
+# install dependencies
 pip install --upgrade -r requirements.txt
 
+# set add the application root directory in PYTHONPATH
 export PYTHONPATH="/app"
 
-# start a terminal inside the Docker container
+# ping RabbitMQ server first before starting the app
+while ! nc -z rabbitmq.local.io 5672; do
+  echo "Pinging rabbitmq.local.io in 1 sec..."
+  sleep 1
+done
+
+# start app
 python3 subscriber/app.py
