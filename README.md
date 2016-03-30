@@ -7,12 +7,14 @@ RabbitMQ as its message broker.
 
 To start, run:
 ```
-bash start.bash
+bash start.bash [publisher=desired_number subscriber=desired_number]
 ```
 
 This will start the simulation (using Docker containers). The 
 publishers and subscribers will continue to publish and consume messages, 
-respectively, until they are stopped.
+respectively, until they are stopped. You have the option of running the 
+desired number of instances you want for both publishers and subscribers 
+(default for both is 1).
 
 To stop, run:
 ```
