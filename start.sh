@@ -25,7 +25,7 @@ curr_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # create custom network
 echo "Creating 'pubsub' network"
-docker network create -d bridge --subnet 172.14.0.0/24 pubsub
+docker network create -d bridge --subnet 172.14.0.0/24 pubsub 1> /dev/null
 
 # start components
 docker-compose -f $curr_dir/docker-compose.yml up -d
