@@ -9,8 +9,9 @@ import random
 import time
 import uuid
 
+
 def main():
-    pre_path =os.path.dirname(os.path.abspath(
+    pre_path = os.path.dirname(os.path.abspath(
         inspect.getfile(inspect.currentframe())))
     config = configparser.ConfigParser()
     config.read(os.path.join(pre_path, 'app.ini'))
@@ -22,9 +23,9 @@ def main():
                                          topics=config['rabbitmq']['topics'])
 
     try:
-        while (True):
-            int = random.randint(0,4)
-            time.sleep(int)
+        while True:
+            delay = random.randint(0, 4)
+            time.sleep(delay)
             message = str.format("This is a test message with id {0}",
                                  uuid.uuid4())
             msgbus.RabbitMqClient.publish(message=message, options=opts)
