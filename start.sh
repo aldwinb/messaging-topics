@@ -1,5 +1,13 @@
 #!/usr/bin/env bash
 
+die () {
+  echo "$@" >&2
+  exit 1;
+}
+
+# check if custom network already exists, if yes, throw error
+! docker network ls | egrep "pubsub" > /dev/null || die "Custom network 'pubsub' already exists. Please remove it first and run script again."
+
 # set # of instances
 num_of_publishers=1
 num_of_subscribers=1
@@ -14,6 +22,10 @@ done
 
 # get current directory
 curr_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# create custom network
+echo "Creating 'pubsub' network"
+docker network create -d bridge --subnet 172.14.0.0/24 pubsub
 
 # start components
 docker-compose -f $curr_dir/docker-compose.yml up -d
