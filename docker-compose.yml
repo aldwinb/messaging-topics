@@ -10,7 +10,7 @@ rabbitmq:
     - "15672:15672"
 
 logspout:
-  image: gliderlabs/logspout
+  build: ./logspout
   container_name: logspout-1
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
