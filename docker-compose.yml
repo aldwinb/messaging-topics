@@ -1,6 +1,6 @@
 rabbitmq:
   image: rabbitmq:3-management
-  container_name: rabbitmq.local.io
+  container_name: rabbitmq-1
   hostname: my-rabbit
   net: "pubsub"
   ports:
