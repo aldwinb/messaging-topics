@@ -7,8 +7,8 @@ pip install --upgrade -r requirements.txt
 export PYTHONPATH="/app"
 
 # ping RabbitMQ server first before starting the app
-while ! nc -z rabbitmq.local.io 5672; do
-  echo "Pinging rabbitmq.local.io in 1 sec..."
+while ! nc -z rabbitmq-1 5672; do
+  echo "Pinging rabbitmq-1 in 1 sec..."
   sleep 1
 done
 

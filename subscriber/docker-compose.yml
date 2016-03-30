@@ -2,7 +2,6 @@ app:
   image: python:3.5.1-alpine
   volumes:
     - .:/app
-  external_links:
-    - "rabbitmq-1:rabbitmq.local.io"
+  net: "pubsub"
   working_dir: /app
   command: sh cmd.sh
