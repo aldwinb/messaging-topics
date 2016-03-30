@@ -1,13 +1,22 @@
 # messaging-topics #
 
-A sample publish-subscribe microservice ecosystem that uses topics. It uses RabbitMQ as its message broker.
+A sample publish-subscribe microservice ecosystem that uses topics. It uses 
+RabbitMQ as its message broker.
 
 ### How do I run the ecosystem? ###
 
+To start, run:
 ```
-bash simulation.bash [number_of_messages]
+bash start.bash
 ```
 
-This is going to start a publish-subscribe simulation (using Docker containers). 
-It will publish the number of messages passed (or 100 messages if not supplied).
-Logs can be viewed in the stopped Docker containers.
+This will start the simulation (using Docker containers). The 
+publishers and subscribers will continue to publish and consume messages, 
+respectively, until they are stopped.
+
+To stop, run:
+```
+bash stop.bash
+```
+
+Logs can be viewed in the Docker containers.
