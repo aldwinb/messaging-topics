@@ -9,8 +9,6 @@
 # [ "$#" -eq "1" ] || die "Invalid argument(s). USAGE:"\
 #  "simulation.sh"
 
-export NUM_OF_MESSAGES=$1
-
 # get current directory
 curr_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
