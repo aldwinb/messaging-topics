@@ -3,6 +3,17 @@ rabbitmq:
   container_name: rabbitmq-1
   hostname: my-rabbit
   net: "pubsub"
+  environment:
+    - LOGSPOUT=ignore
   ports:
     - "5672:5672"
     - "15672:15672"
+
+logspout:
+  image: gliderlabs/logspout
+  container_name: logspout-1
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+  ports:
+    - "9001:80"
+  command: syslog://logs.papertrailapp.com:55555
