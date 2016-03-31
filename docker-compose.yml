@@ -9,11 +9,20 @@ rabbitmq:
     - "5672:5672"
     - "15672:15672"
 
+logstash:
+  image: logstash
+  container_name: logstash-1
+  net: "pubsub"
+  tty: true
+  command: logstash -e 'input { udp { port => 5000 codec => json } } output { stdout { } }'
+
 logspout:
   build: ./logspout
   container_name: logspout-1
+  net: "pubsub"
+  environment:
+    - ROUTE_URIS=logstash://logstash-1:5000
   volumes:
     - /var/run/docker.sock:/var/run/docker.sock
   ports:
     - "9001:80"
-  command: syslog://logs.papertrailapp.com:55555
