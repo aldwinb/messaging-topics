@@ -10,8 +10,13 @@ curr_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # destroy components
 docker-compose -f $curr_dir/publisher/docker-compose.yml stop
 docker-compose -f $curr_dir/subscriber/docker-compose.yml stop
-docker-compose -f $curr_dir/docker-compose-logspout.yml stop
 docker-compose -f $curr_dir/docker-compose.yml stop
+
+# destroy logspout
+docker-compose -f $curr_dir/docker-compose-logspout.yml stop
+
+# destroy logstash
+docker-compose -f $curr_dir/docker-compose-logstash.yml stop
 
 # destroy custom network
 echo "Destroying '$network' network"

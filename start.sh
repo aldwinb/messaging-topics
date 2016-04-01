@@ -11,6 +11,26 @@ network="pubsub"
 # check if custom network already exists, if yes, throw error
 ! docker network ls | egrep "$network" > /dev/null || die "Custom network '$network' already exists. Please remove it first and run script again."
 
+# get current directory
+curr_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+
+# create custom network
+echo "Creating '$network' network"
+docker network create -d bridge --subnet 172.14.0.0/24 $network 1> /dev/null
+
+# logstash needs to be online first before we can start logspout, or else
+# logspout will fail
+docker-compose -f $curr_dir/docker-compose-logstash.yml up -d
+
+logstash_ip=$(docker inspect --format '{{ .NetworkSettings.Networks.'$network'.IPAddress}}' logstash-1)
+while ! nc -zu $logstash_ip 5000; do
+  echo "Pinging logstash-1 in 1 sec..."
+  sleep 1
+done
+
+# start logspout
+docker-compose -f $curr_dir/docker-compose-logspout.yml up -d
+
 # set # of instances
 num_of_publishers=1
 num_of_subscribers=1
@@ -23,28 +43,10 @@ while [ "${1+defined}" ]; do
   shift 1
 done
 
-# get current directory
-curr_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-
-# create custom network
-echo "Creating '$network' network"
-docker network create -d bridge --subnet 172.14.0.0/24 $network 1> /dev/null
-
-# start components
+# start microservice ecosystem
 docker-compose -f $curr_dir/docker-compose.yml up -d
 docker-compose -f $curr_dir/subscriber/docker-compose.yml up -d
 docker-compose -f $curr_dir/publisher/docker-compose.yml up -d
-
-# logstash needs to be online first before we can start logspout, or else
-# logspout will fail
-logstash_ip=$(docker inspect --format '{{ .NetworkSettings.Networks.'$network'.IPAddress}}' logstash-1)
-while ! nc -zu $logstash_ip 5000; do
-  echo "Pinging logstash-1 in 1 sec..."
-  sleep 1
-done
-
-# start logspout
-docker-compose -f $curr_dir/docker-compose-logspout.yml up -d
 
 # scale publishers and subscribers
 if [ "$num_of_publishers" -gt "1" ]; then
