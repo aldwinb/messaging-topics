@@ -32,6 +32,18 @@ docker-compose -f $curr_dir/docker-compose.yml up -d
 docker-compose -f $curr_dir/subscriber/docker-compose.yml up -d
 docker-compose -f $curr_dir/publisher/docker-compose.yml up -d
 
+# logstash needs to be online first before we can start logspout, or else
+# logspout will fail
+logstash_ip=$(docker inspect --format '{{ .NetworkSettings.Networks.pubsub.IPAddress}}' logstash-1)
+echo $logstash_ip
+while ! nc -zu $logstash_ip 5000; do
+  echo "Pinging logstash-1 in 1 sec..."
+  sleep 1
+done
+
+# start logspout
+docker-compose -f $curr_dir/docker-compose-logspout.yml up -d
+
 # scale publishers and subscribers
 if [ "$num_of_publishers" -gt "1" ]; then
   docker-compose -f $curr_dir/publisher/docker-compose.yml \

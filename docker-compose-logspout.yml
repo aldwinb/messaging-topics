@@ -1,0 +1,10 @@
+logspout:
+  build: ./logspout
+  container_name: logspout-1
+  net: "pubsub"
+  environment:
+    - ROUTE_URIS=logstash://logstash-1:5000
+  volumes:
+    - /var/run/docker.sock:/var/run/docker.sock
+  ports:
+    - "9001:80"
