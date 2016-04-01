@@ -5,8 +5,7 @@ A sample publish-subscribe microservice ecosystem that uses topics.
 Features:
 
 * Scalable publishers and subscribers using [RabbitMQ](http://www.rabbitmq.com/getstarted.html) as their message broker
-* Log collection framework using [logspout](https://github
-.com/gliderlabs/logspout) and [logstash](https://www.elastic.co/guide/en/logstash/current/introduction.html)
+* Log collection framework using [logspout](https://github.com/gliderlabs/logspout) and [logstash](https://www.elastic.co/guide/en/logstash/current/introduction.html)
 * Components powered by [Docker](https://www.docker.com/what-docker)
 
 ### How do I run the ecosystem? ###
