@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+
+# assign a network name
+network="pubsub"
+
 # get current directory
 curr_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
@@ -8,6 +12,12 @@ docker-compose -f $curr_dir/publisher/docker-compose.yml stop
 docker-compose -f $curr_dir/subscriber/docker-compose.yml stop
 docker-compose -f $curr_dir/docker-compose.yml stop
 
+# destroy logspout
+docker-compose -f $curr_dir/docker-compose-logspout.yml stop
+
+# destroy logstash
+docker-compose -f $curr_dir/docker-compose-logstash.yml stop
+
 # destroy custom network
-echo "Destroying 'pubsub' network"
-! docker network ls | egrep "pubsub" > /dev/null  || docker network rm pubsub
+echo "Destroying '$network' network"
+! docker network ls | egrep "$network" > /dev/null  || docker network rm $network
