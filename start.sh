@@ -5,8 +5,11 @@ die () {
   exit 1;
 }
 
+# assign a network name
+network="pubsub"
+
 # check if custom network already exists, if yes, throw error
-! docker network ls | egrep "pubsub" > /dev/null || die "Custom network 'pubsub' already exists. Please remove it first and run script again."
+! docker network ls | egrep "$network" > /dev/null || die "Custom network '$network' already exists. Please remove it first and run script again."
 
 # set # of instances
 num_of_publishers=1
@@ -24,8 +27,8 @@ done
 curr_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # create custom network
-echo "Creating 'pubsub' network"
-docker network create -d bridge --subnet 172.14.0.0/24 pubsub 1> /dev/null
+echo "Creating '$network' network"
+docker network create -d bridge --subnet 172.14.0.0/24 $network 1> /dev/null
 
 # start components
 docker-compose -f $curr_dir/docker-compose.yml up -d
@@ -34,8 +37,7 @@ docker-compose -f $curr_dir/publisher/docker-compose.yml up -d
 
 # logstash needs to be online first before we can start logspout, or else
 # logspout will fail
-logstash_ip=$(docker inspect --format '{{ .NetworkSettings.Networks.pubsub.IPAddress}}' logstash-1)
-echo $logstash_ip
+logstash_ip=$(docker inspect --format '{{ .NetworkSettings.Networks.'$network'.IPAddress}}' logstash-1)
 while ! nc -zu $logstash_ip 5000; do
   echo "Pinging logstash-1 in 1 sec..."
   sleep 1
