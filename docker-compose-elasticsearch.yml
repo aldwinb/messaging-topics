@@ -1,0 +1,6 @@
+elasticsearch:
+  image: elasticsearch
+  container_name: elasticsearch-1
+  net: "pubsub"
+  volumes:
+  - /home/vagrant/.esdata:/usr/share/elasticsearch/data
