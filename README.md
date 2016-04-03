@@ -32,10 +32,8 @@ bash stop.sh
 
 ### How can I view the logs collected? ###
 
-Currently you can view the logs by running this command:
-```
-docker logs logstash-1
-```
+You can view the logs through [Elasticsearch's API]
+(https://www.elastic.co/guide/en/elasticsearch/reference/current/_exploring_your_data.html)
 
 ### TODO ###
 
