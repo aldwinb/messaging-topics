@@ -7,8 +7,9 @@ Features:
 * Scalable publishers and subscribers using 
 [RabbitMQ](http://www.rabbitmq.com/getstarted.html) as their message broker
 * Log collection framework using 
-[logspout](https://github.com/gliderlabs/logspout) and 
+[logspout](https://github.com/gliderlabs/logspout),
 [Logstash](https://www.elastic.co/guide/en/logstash/current/introduction.html)
+and [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/getting-started.html)
 * Components powered by [Docker](https://www.docker.com/what-docker)
 
 ### How do I run the ecosystem? ###
@@ -38,6 +39,6 @@ docker logs logstash-1
 
 ### TODO ###
 
-* Add Elasticsearch and Kibana in the log collection framework
+* Add Kibana in the log collection framework
 
 
