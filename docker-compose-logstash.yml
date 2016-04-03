@@ -8,3 +8,12 @@ logstash:
   volumes:
     - ./logstash:/config-dir
   command: logstash -f /config-dir/logstash.conf
+
+kibana:
+  image: kibana
+  container_name: kibana-1
+  net: "pubsub"
+  environment:
+    - ELASTICSEARCH_URL=${ELASTIC_URI}
+  ports:
+    - "5601:5601"

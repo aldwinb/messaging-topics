@@ -7,9 +7,10 @@ Features:
 * Scalable publishers and subscribers using 
 [RabbitMQ](http://www.rabbitmq.com/getstarted.html) as their message broker
 * Log collection framework using 
-[logspout](https://github.com/gliderlabs/logspout),
-[Logstash](https://www.elastic.co/guide/en/logstash/current/introduction.html)
-and [Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/getting-started.html)
+[logspout](https://github.com/gliderlabs/logspout) and ELK stack (
+[Elasticsearch](https://www.elastic.co/guide/en/elasticsearch/reference/current/getting-started.html),
+[Logstash](https://www.elastic.co/guide/en/logstash/current/introduction.html),
+and [Kibana](https://www.elastic.co/guide/en/kibana/current/getting-started.html))
 * Components powered by [Docker](https://www.docker.com/what-docker)
 
 ### How do I run the ecosystem? ###
@@ -32,11 +33,13 @@ bash stop.sh
 
 ### How can I view the logs collected? ###
 
-You can view the logs through [Elasticsearch's API]
-(https://www.elastic.co/guide/en/elasticsearch/reference/current/_exploring_your_data.html)
+Kibana's port (5601) is mapped to the host, so you can access Kibana's 
+console via http://localhost:5601
 
 ### TODO ###
 
-* Add Kibana in the log collection framework
+* Support for overriding configuration of ELK stack
+* Rename Elasticsearch index coming from Logstash
+
 
 
