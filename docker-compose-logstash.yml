@@ -3,4 +3,8 @@ logstash:
   container_name: logstash-1
   net: "pubsub"
   tty: true
-  command: logstash -e 'input { udp { port => 5000 codec => json } } output { stdout { } }'
+  environment:
+    - ELASTIC_IP=${ELASTIC_IP}
+  volumes:
+    - ./logstash:/config-dir
+  command: logstash -f /config-dir/logstash.conf

@@ -12,11 +12,7 @@ docker-compose -f $curr_dir/publisher/docker-compose.yml stop
 docker-compose -f $curr_dir/subscriber/docker-compose.yml stop
 docker-compose -f $curr_dir/docker-compose.yml stop
 
-# destroy logspout
-docker-compose -f $curr_dir/docker-compose-logspout.yml stop
-
-# destroy logstash
-docker-compose -f $curr_dir/docker-compose-logstash.yml stop
+bash stop-elk.sh
 
 # destroy custom network
 echo "Destroying '$network' network"

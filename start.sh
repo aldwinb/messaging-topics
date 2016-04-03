@@ -18,18 +18,10 @@ curr_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 echo "Creating '$network' network"
 docker network create -d bridge --subnet 172.14.0.0/24 $network 1> /dev/null
 
-# logstash needs to be online first before we can start logspout, or else
-# logspout will fail
-docker-compose -f $curr_dir/docker-compose-logstash.yml up -d
-
-logstash_ip=$(docker inspect --format '{{ .NetworkSettings.Networks.'$network'.IPAddress}}' logstash-1)
-while ! nc -zu $logstash_ip 5000; do
-  echo "Pinging logstash-1 in 1 sec..."
-  sleep 1
-done
-
-# start logspout
-docker-compose -f $curr_dir/docker-compose-logspout.yml up -d
+# start ELK stack
+if ! bash start-elk.sh $network; then
+  echo "Failed to start logging framework (ELK stack)."
+fi
 
 # set # of instances
 num_of_publishers=1
