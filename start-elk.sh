@@ -12,7 +12,7 @@ curr_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 # env variable so that Logstash can pick it up
 if docker-compose -f $curr_dir/docker-compose-elasticsearch.yml up -d; then
   export ELASTIC_IP=$(docker inspect --format '{{ .NetworkSettings.Networks.'$network'.IPAddress}}' elasticsearch-1)
-
+  export ELASTIC_URI=http://$ELASTIC_IP:9200
 
   # Logstash needs to be online first before we can start logspout, or else
   # logspout will fail
