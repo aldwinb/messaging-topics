@@ -1,7 +1,0 @@
-app:
-  image: python:3.5.1-alpine
-  volumes:
-    - .:/app
-  net: "pubsub"
-  working_dir: /app
-  command: sh cmd.sh
