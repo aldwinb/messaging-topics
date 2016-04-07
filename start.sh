@@ -37,16 +37,14 @@ done
 
 # start microservice ecosystem
 docker-compose -f $curr_dir/docker-compose.yml up -d
-docker-compose -f $curr_dir/subscriber/docker-compose.yml up -d
-docker-compose -f $curr_dir/publisher/docker-compose.yml up -d
 
 # scale publishers and subscribers
 if [ "$num_of_publishers" -gt "1" ]; then
-  docker-compose -f $curr_dir/publisher/docker-compose.yml \
-  scale app=$num_of_publishers
+  docker-compose -f $curr_dir/docker-compose.yml \
+  scale publisher=$num_of_publishers
 fi
 
 if [ "$num_of_subscribers" -gt "1" ]; then
-  docker-compose -f $curr_dir/subscriber/docker-compose.yml \
-  scale app=$num_of_subscribers
+  docker-compose -f $curr_dir/docker-compose.yml \
+  scale subscriber=$num_of_subscribers
 fi
