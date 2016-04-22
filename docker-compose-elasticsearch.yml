@@ -2,5 +2,7 @@ elasticsearch:
   image: elasticsearch
   container_name: elasticsearch-1
   net: "pubsub"
+  environment:
+    - LOGSPOUT=ignore
   volumes:
   - /home/vagrant/.esdata:/usr/share/elasticsearch/data
